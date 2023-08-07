@@ -62,9 +62,9 @@ and follow the instruction prompts
 
 ## FOR FURTHER DETAILS 
 
-Please consult the R documentation and the PDF Vignette available in the R package and on this repository for further details.
+Please consult the R documentation and the [PDF Vignette](inst/doc/RunningASmallAnalysis.pdf) available in the R package and on this repository for further details.
 
-Don't hestiate to contact me (Luke Harrison) - luke.harrison@mail.mcgill.ca with any bugs, comments, suggestions or questions.
+Don't hesitate to contact me (Luke Harrison) - luke.harrison@mail.mcgill.ca with any bugs, comments, suggestions or questions.
 
 
 
