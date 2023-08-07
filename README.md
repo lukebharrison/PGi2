@@ -1,4 +1,3 @@
-# PGi2 
 PGi R package v2.1 README 
 2023/08/07
 PGI2: Parsimov-scoared Genetic Inference Method
