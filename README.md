@@ -2,7 +2,7 @@
 2023/08/07
 PGI2: Parsimov-scoared Genetic Inference Method
 
-This package implements the PGi algorithm for the analysis of the evolution of developmental sequences. Many supporting functions and the basic structure of the vignette are inspired or based on functions/vignettes available in the R APE package.
+This package implements the PGi algorithm for the analysis of the evolution of developmental sequences. Many supporting functions and the basic structure of the vignette (inst/doc/RunningASmallAnalysis.pdf) are inspired or based on functions/vignettes available in the R APE package.
 
 Please refer to the following article for background on the algorithm. This is also the prefered citation for PGi: 
 
