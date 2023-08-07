@@ -40,18 +40,17 @@ Please also refer to the R vignette: RunningASmallAnalysis.pdf for a worked exam
 ## GETTING DATA INTO PGI2
 
 1. Enter the dataset into a NEXUS file with the tree topology (see vignette for a worked example)
-Notes: enter the RANKED data as discrete characters. So for example, if the sequence is 1-2-4-3 (= A-B-D-C), then:
-character 1(A) = 1
-character 2(B) = 2
-character 3(C) = 4
-character 4(D) = 3 
-For ranks between 10 and 35 use A,B,C,...,Y, in the nexus file and so on. Enter unscorable/missing data as Z.
-It is possible to have 36+ but the the pgi data structure must be manually edited.
-Make sure the taxon names have no spaces and aren't too long (it'll copy those too).
-Enter a single phylogenetic topology and save it in to the nexus file
-in the standard parenthetical format (newick).
+Notes: enter the RANKED data as discrete characters. So for example, if the sequence is 1-2-4-3 (= A-B-D-C), then:  
+character 1(A) = 1  
+character 2(B) = 2  
+character 3(C) = 4  
+character 4(D) = 3   
+For ranks between 10 and 35 use A,B,C,...,Y, in the nexus file and so on. Enter unscorable/missing data as Z.  
+It is possible to have 36+ but the the pgi data structure must be manually edited.  
+Make sure the taxon names have no spaces and aren't too long (it'll copy those too).  
+Enter a single phylogenetic topology and save it in to the nexus file in the standard parenthetical format (newick).  
 
-2. Load the data into PGi, using the function 
+3. Load the data into PGi, using the function 
 >my_tree<-pgi.read.nexus("filename")  
 more details in ?pgi.read.nexus
 
