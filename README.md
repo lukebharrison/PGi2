@@ -6,8 +6,8 @@ This package implements the PGi algorithm for the analysis of the evolution of d
 
 Please refer to the following article for background on the algorithm. This is also the prefered citation for PGi: 
 
-Harrison, Luke B. and Larsson, Hans C. E. (2008) 'Estimating Evolution of Temporal Sequence Changes: A Practical Approach to Inferring
-Ancestral Developmental Sequences and Sequence Heterochrony', Systematic Biology, 57:3, 378 — 387 (https://academic.oup.com/sysbio/article/57/3/378/1661823)
+[Harrison, Luke B. and Larsson, Hans C. E. (2008) 'Estimating Evolution of Temporal Sequence Changes: A Practical Approach to Inferring
+Ancestral Developmental Sequences and Sequence Heterochrony', Systematic Biology, 57:3, 378 — 387](https://academic.oup.com/sysbio/article/57/3/378/1661823)
 
 Please contact Luke Harrison if you have any comments/questions 
 or bug reports etc. luke.harrison@mail.mcgill.ca
