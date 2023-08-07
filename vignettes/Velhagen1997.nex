@@ -1,0 +1,42 @@
+#NEXUS
+
+BEGIN TAXA;
+	TITLE Untitled_Taxa_Block;
+	DIMENSIONS NTAX=6;
+	TAXLABELS
+		tproximus tradix sdekayi soccipitomaculata nsipedon ntaxispilota 
+	;
+
+END;
+
+
+BEGIN CHARACTERS;
+	TITLE  Untitled_Character_Matrix;
+	DIMENSIONS  NCHAR=5;
+	FORMAT DATATYPE = STANDARD GAP = - MISSING = ? SYMBOLS = "  0 1 2 3 4 5";
+	MATRIX
+	tproximus          13542
+	tradix             22331
+	sdekayi            21431
+	soccipitomaculata  21343
+	nsipedon           11211
+	ntaxispilota       21341
+
+;
+
+END;
+
+BEGIN TREES;
+	Title Untitled_Tree_Block;
+	LINK Taxa = Untitled_Taxa_Block;
+	TRANSLATE
+		1 tproximus,
+		2 tradix,
+		3 sdekayi,
+		4 soccipitomaculata,
+		5 nsipedon,
+		6 ntaxispilota;
+	TREE tree = ((4,3),(((1,2),5),6));
+
+END;
+

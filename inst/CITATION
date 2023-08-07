@@ -1,0 +1,10 @@
+bibentry(bibtype  = "Article",
+  title    = "Estimating evolution of temporal sequence changes: A practical approach to inferring ancestral developmental sequences and sequence heterochrony",
+  author   = c(person("Luke B","Harrison"),person("Hans CE","Larsson")),
+  journal  = "Systematic Biology",
+  year     = "2008",
+  volume   = "57",
+  pages    = "378-387",
+  doi      = "10.1080/10635150802164421",
+  header   = "to cite PGi algorith and the PGi2 software package in a publication, please use:"
+)

@@ -1,0 +1,24 @@
+# Default NAMESPACE created by R
+# Remove the previous line if you edit this file
+
+# Export all names
+exportPattern(".")
+
+# Export generic methods
+#exportMethods(plot,summary)
+S3method(plot,pgi.tree)
+S3method(plot,multi.pgi.tree)
+S3method(summary,pgi.tree)
+S3method(summary,multi.pgi.tree)
+
+
+# Import all packages listed as Imports or Depends
+import(
+  ape,
+  e1071,
+  tcltk
+)
+importFrom("graphics", "par", "text")
+importFrom("stats", "runif")
+importFrom("utils", "getTxtProgressBar", "setTxtProgressBar", "txtProgressBar")
+

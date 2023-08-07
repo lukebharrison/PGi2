@@ -1,0 +1,161 @@
+\documentclass[letter]{article}
+% Thanks to Ape's creators for the style files and model for this vignette document.
+\usepackage{ape}
+\SweaveOpts{keep.source=FALSE} 
+
+\author{Luke B Harrison}
+\title{Reconstructing the evolution of developmental sequences in \R: analysis of a small data set using \pkg{pgi2}}
+
+\begin{document}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{formatcom=\color{darkblue}}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{formatcom=\color{black}\vspace{-1.5em}}
+
+\maketitle
+\tableofcontents\vspace*{1pc}\hrule
+
+<<echo=false,quiet=true>>=
+options(width = 80, prompt = "> ")
+@
+
+\vspace{1cm}
+
+\section{Introduction}
+
+The PGi2 package implements the PGi algorithm described in Harrison and Larsson \cite{HarrisonLarsson2008} for the analysis of the evolution of developmental sequences. Readers are referred to that article for a more in-depth discussion of the theoretical concerns. This vignette will focus on the application of \pkg{pgi} to the analysis of a small dataset of developmental sequences published by Velhagen (1997).
+
+\section{Basic Concepts}\label{sec:basic}
+
+Conducting a PGi analysis in \R using the \pkg{pgi2} consists of several steps.\\
+1. The raw data: 1) ranked developmental sequences and a 2) phylogenetic tree are read into R using the function \code{pgi.read.nexus()} to create an "empty" \code{pgi.tree} class data structure (or alternatively for advanced users, this can be contructed manually)\\
+2. The PGi algorithm is executed multiple times with the \code{pgi()} function on the "empty" \code{pgi.tree} data structure to infer ancestral developmental sequences and sequence heterochronies. Consensus trees are produced for each run of the algorithm. \\
+3. If more than one run was conducted (always recomended), a "superconsensus" of the individual consensus trees is performed with \code{pgi.supercon()}\\
+4. The results are plotted using \code{plot.pgi.tree()}\\
+
+\section{Worked example: Velhagen's (1997) data set}\label{sec:example}
+\subsection{Background}
+
+Velhagen \cite{Velhagen1997} published a data set of developmental sequences of thamnophiine snakes. In this data set, there are 6 taxa, for which the sequence of ossification of 5 cranial bones is determined. A phylogeny is provided with the sequences. To be used in PGi, these sequences need to be specified in ranked developmental sequence format to yield a matrix of ranks for each bone. Note: developmental sequences may have simultaenity - that is events may occure simulatenously and thus a single sequence may have fewer ranks than events. 
+
+Velhagen reported the developmental seqeunce in terms of the order of the ossification of the bones: B = basioccipital; M = maxilla; N = nasal; Q = quadrate; S = supratemporal.
+\begin{align*}
+&Nerodia sipedon:&&	BMQS, N\\
+&Nerodia taxispilota:&&	MS, B, N, Q\\
+&Storeria dekayi:&&	M, BS, Q, N\\
+&Storeria occipitomaculata:&&	M, B, NS, Q\\
+&Thamnophis proximus:&&	 B, S, M, Q, N\\
+&Thamnophis radix:&&	S, BM, NQ\\
+\end{align*}
+\\
+To simply exceution, PGi will store sequences as numerics starting with 1, i.e. 1 = B, 2 = M, 3 = N, 4 = Q, 5= S. Therefore the these raw sequences would be represented in PGi as:
+\\
+\begin{align*}
+&N. sipedon:&&		[1,2,4,5],3\\
+&N. taxispilota:&&		[2,5],1,3,4\\
+&S. dekayi:&&		[2,5],1,4,3\\
+&S. occipitomaculata:&&	2,1,[3,5],4\\
+&T. proximus:&&	 	1,5,2,4,3\\
+&T. radix:&& 		5,[1,2],[3,4]\\
+\end{align*}
+Internally, PGi also uses ranked developmental seqeunces and this is the input format. For Velhagen's data set, Translating these into ranked developmental sequence (with events in the order stated above) yields the following:
+\begin{align*}
+& &&			B, M, N, Q, S\\
+&N. sipedon:&&		1,   1,   2,   1,   1\\
+&N. taxispilota:&&		2,   1,   3,   4,   1\\
+&S. dekayi:&&		2,   1,   4,   3,   1\\
+&S. occipitomaculata:&&	2,   1,   3,   4,   3\\
+&T. proximus:&&	 	1,   3,   5,   4,   2\\
+&T. radix:&& 		2,   2,   3,   3,   1\\
+\end{align*}
+\\
+Note: the \pkg{pgi2} includes a utility function that can translate developmental sequences into ranked developmental sequences: \code{seq.to.rds()} and vice-versa \code{rds.to.seq()}, please refer to the man pages of those functions \code{?seq.to.rds} and \code{?rds.to.seq} for details.
+
+A NEXUS formatted file of this data set (as ranked developmental seqeunces) and the accompanying phylogenetic tree is included in the PGi package, and is exerpted below as an example.\\
+\begin{scriptsize}
+<<echo=FALSE>>=
+writeLines(readLines("Velhagen1997.nex"))
+@
+\end{scriptsize}
+
+\subsection{Reading developmental sequence data into R}
+
+The NEXUS file is read by pgi.read.nexus(), alternatively, the data structure is also available in the PGi2 package using data(velhagen).
+\begin{scriptsize}
+<<>>=
+library(pgi2)
+velhagen <- pgi.read.nexus("Velhagen1997.nex")
+@
+\end{scriptsize}
+
+\noindent Note, please ensure the Velhagen1997.nex file is in the current R working directory or a full path name will need to be specified. Alternatively exceuting \code{pgi.read.nexus(interactive=TRUE)} will open an interactive dialogue to find the file. Now that the NEXUS file has been read into the velhagen \code{pgi.tree} object we can verify it was correctly read by using the \code{summary()} and \code{plot()} functions:
+\begin{scriptsize}
+<<>>=
+summary(velhagen)
+@
+
+<<fig=true>>=
+plot(velhagen,show.tip.seq=TRUE)
+@
+\end{scriptsize}
+\\
+\noindent The velhagen data structure now contains the ranked developmental sequences and phylogenetic tree in an "empty" \code{pgi.tree} object. Further details on graphical options can be found in the manual for the \code{plot.pgi.tree()} function. Note: that output from the \code{summary.pgi.tree} and \code{plot.pgi.tree} functions display the sequences as RAW developmental sequences and not as ranked developmental sequences.
+
+\subsection{Executing the PGi algorithm}
+
+This sections assumes readers are familiar with the description of the PGi algorithm in Harrison and Larsson \cite{HarrisonLarsson2008}. The pgi() function controls overall execution of the genetic algoirthm, and the inference of ancestral developmental sequences and the generation of consensus trees of sequence heterochronies. Several parameters must be specified. 
+First an "empty" pgi.tree must be first argument. 
+Next, the number of runs and whether any are conducted in parallel using the R packages \pkg{foreach} and \pkg{doMC} is specified by nruns, where the first number is the number of runs in series and the second, the number of runs to be executed in parallel in each series run; thus the total number of runs is the product of these numbers, or 8 in the example below. Note PGi does not parallelize execution more than this.
+The inference parameters (for the genetic algorithm) are provided in the info.params list: here, 100 cycles of selection, exceuted 100 times, with 100 intermediate sequences retained at each internal node a specified. The edit cost function is \code{parsimov}, and the consensus parameters are as show:
+\begin{scriptsize}
+<<>>=
+velhagen.con.trees<-pgi(velhagen,nruns=c(4,2),inf.params=list(heuristic="pgi",cycles=100,replicates=100,ret.anc.seq=100,edit.cost.func="parsimov",simultaneity=TRUE),con.params=list(con.type="semi-exhaustive",semi.ex.con.max.n=5000,edit.cost.func="parsimov"),verbosity=1)
+@
+\end{scriptsize}
+\subsection{Examining the initial results}
+The results of the 8 indepedent runs are stored in a \code{multi.pgi.tree} data object, this is essentially an R \code{list} of \code{pgi.tree} objects. Generic methods \code{summary()} and \code{plot} are available for the \code{multi.pgi.tree} class. 
+\begin{scriptsize}
+<<>>=
+summary(velhagen.con.trees)
+@
+\end{scriptsize}
+
+\noindent Execution has yielded 8 consesus trees, each with tree lengths of 8 sequence heterochronies. Individual trees and estimated sequence heterochronies, and ancestral sequences can be visualized either in a single figure by using \code{plot(velhagen.con.trees)} or invidiually using \code{plot(velhagen.con.trees[[N]])}. 
+\begin{scriptsize}
+<<fig=true>>=
+plot(velhagen.con.trees[[3]],show.tip.seq=TRUE,show.anc.seq=TRUE)
+@
+\end{scriptsize}
+\\
+\noindent For example, this is the consensus solution from the 3rd of 8 independent PGi runs, showing ancestral sequences, sequence heterochronies, and tip sequences. 
+
+\begin{scriptsize}
+<<fig=true,width=8.5,height=11>>=
+plot(velhagen.con.trees,show.tip.seq=FALSE,show.anc.seq=FALSE)
+@
+\end{scriptsize}
+\\
+\noindent This figure, using the \code{plot()} method on the \code{multi.pgi.tree} object yields a multi panel figure of all 8 indepdent runs
+
+\subsection{Generating a superconsensus}
+The invidiual consensus results can be summarized using a superconsensus tree. This tree is generated using the \code{pgi.supercon} function, which expects a \code{multi.pgi.tree} data object with at least 2 conensus trees and will output a \code{pgi.tree} data object of the type "superconsensus". By default, the \code{pgi.supercon} function will create a superconsensus of all consensus solutions of the shortest tree length (in terms of sequence heterochronies). This behaviours can be modified using the \code{tol} parameter, see \code{?pgi.supercon} for more details.
+\begin{scriptsize}
+<<>>=
+velhagen.supercon<-pgi.supercon(velhagen.con.trees,tol=0,verbosity=1)
+@
+<<fig=true>>=
+plot(velhagen.supercon,show.tip.seq=TRUE,show.anc.seq=TRUE)
+@
+\end{scriptsize}
+\\
+\noindent The above figure represents the final output of the PGi algorithm for this data set. Further output options are available in the plotting function, see \code{?plot.pgi.tree} for more details. For example, support values for each heterochrony, which represent the fraction of total solutions containing that specific sequence heterochrony can be visualized, with the \code{print.support=TRUE} option. By default, only sequence heterochronies present in at least 50\% of solutions examined will be printed, but this behaviour can be adjusted using the parameter \code{seq.het.thres}. In the following example, all sequence heterochronies are printed with their support values and all estimated consensus ancestral sequences are also printed along with the raw developmental sequences.
+\begin{scriptsize}
+<<fig=true>>=
+plot(velhagen.supercon,seq.het.thres=0,print.support=TRUE,show.anc.seq=TRUE,show.tip.seq=TRUE)
+@
+\end{scriptsize}
+\\
+\noindent Note: that PGi uses the excellent \code{ape::plot.phylo} to actually do the figure plotting. There is a limit to what can be automatically specified for readability of the figure and some manual editting will likely be required. Additional parameters to \code{plot.pgi()} will automatically be passed to \code{ape::plot.phylo()}
+\bibliographystyle{plain}
+\bibliography{pgi}
+\addcontentsline{toc}{section}{References}
+
+\end{document}

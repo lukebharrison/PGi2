@@ -1,0 +1,16 @@
+Package: pgi2
+Version: 2.1-1
+Date: 2023-08-01
+Title: Parsimov-Scored Genetic Inference Package
+Authors@R: c(person("Luke B", "Harrison", role = c("aut", "cre"),
+           email = "luke.harrison@mail.mcgill.ca"))
+Depends: ape, e1071, tcltk
+Author: Luke B Harrison
+Maintainer: Luke B Harrison <luke.harrison@mail.mcgill.ca>
+Suggests: parallel, doMC, foreach
+Description: This package implements the PGi algorithm (Harrison and Larsson, 2008) for the analysis of developmental sequences and sequence heterochrony in an explicit phylogenetic context. Use pgi.interactive() for an interactive execution helper or read the README and the vignettes and use the pgi() function.
+License: GPL (>= 3)
+URL: https://larssonlab.wordpress.com/
+BugReports: luke.harrison@mail.mcgill.ca
+NeedsCompilation: no
+Packaged: 2023-08-07 18:38:16 UTC; luke
