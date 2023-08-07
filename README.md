@@ -1,4 +1,4 @@
-#PGi R package v2.1 README 
+# PGi R package v2.1 README 
 2023/08/07
 PGI2: Parsimov-scoared Genetic Inference Method
 
@@ -12,7 +12,7 @@ Ancestral Developmental Sequences and Sequence Heterochrony', Systematic Biology
 Please contact Luke Harrison if you have any comments/questions 
 or bug reports etc. luke.harrison@mail.mcgill.ca
 
-##INSTALLATION
+## INSTALLATION
 To install PGi2, ensure an up-to-date version of R is installed. 
  
 Installation from the assemebed R source pacakge:
@@ -31,13 +31,13 @@ Installation from GitHub
 
 >libray(pgi2)
 
-##QUICKSTART
+## QUICKSTART
 
 Please refer to the R documentation of this package and its functions, each available in the R documentation system after the package is loaded. The key functions are pgi.read.nexus(), pgi(), pgi.supercon(). 
 
 Please also refer to the R vignette: RunningASmallAnalysis.pdf for a worked example of the execution of PGi2 using Velhagen's (1997) data set.
 
-##GETTING DATA INTO PGI2
+## GETTING DATA INTO PGI2
 
 1. Enter the dataset into a NEXUS file with the tree topology (see vignette for a worked example)
 Notes: enter the RANKED data as discrete characters. So for example, if the sequence is 1-2-4-3 (= A-B-D-C), then:
@@ -55,13 +55,13 @@ in the standard parenthetical format (newick).
 >my_tree<-pgi.read.nexus("filename")  
 more details in ?pgi.read.nexus
 
-##RUNNING PGI2
+## RUNNING PGI2
 
 Run the PGi Algorithm in Interative Mode
 >pgi(interactive=T)
 and follow the instruction prompts
 
-##FOR FURTHER DETAILS 
+## FOR FURTHER DETAILS 
 
 Please consult the R documentation and the PDF Vignette available in the R package and on this repository for further details.
 
