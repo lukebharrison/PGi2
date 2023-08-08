@@ -35,7 +35,7 @@ Installation from GitHub
 
 Please refer to the R documentation of this package and its functions, each available in the R documentation system after the package is loaded. The key functions are pgi.read.nexus(), pgi(), pgi.supercon(). 
 
-Please also refer to the R vignette: RunningASmallAnalysis.pdf for a worked example of the execution of PGi2 using Velhagen's (1997) data set.
+Please also refer to the R vignette: [Running a Small Analysis](inst/doc/RunningASmallAnalysis.pdf) for a worked example of the execution of PGi2 using Velhagen's (1997) data set.
 
 ## GETTING DATA INTO PGI2
 
