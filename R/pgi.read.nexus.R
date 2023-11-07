@@ -20,6 +20,10 @@ function(file=NULL,interactive=FALSE,strip.single.quotes=TRUE) {
 		data[[i]]<-as.integer(.trans.chars(data[[i]]))
 		data[[i]]<-compress.rds(data[[i]])
 	}
+	if(!all(names(data) %in% tree$tip.label)) {
+	 ## tree tip labels don't match data labels
+	 stop("Error, in this nexus file tree labels don't match the data set labels. If you beleive they match, try removing any non-alphanumeric characters, including quotes, etc.")
+	}
 	ntaxa<-length(tree$tip.label)
 	seq_len<-length(data[[1]])
 	#edges<-tree[1][[1]]
