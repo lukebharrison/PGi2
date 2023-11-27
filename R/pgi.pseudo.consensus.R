@@ -12,6 +12,9 @@ function(pgi.tree,verbosity=0,con.params=NULL) {
 	} else {
 		if(is.null(pgi.tree$con.params)) stop("No consensus parameters stored in the pgi.tree object nor provided, stopping..")
 	}
+	if(is.null(pgi.tree$con.params$edit.cost.func)) {
+		stop("No edit cost function specified")
+	}
 	if(pgi.tree$con.params$con.type == "exhaustive") {
 		pgi.tree$con.params$semi.ex.con.max.n<-0
 		if(verbosity > 0) cat("Selected exhaustive pseudoconsensus. WARNING: on some data sets, this consensus method can stall.\n")
