@@ -39,8 +39,12 @@ function(pgi.tree, verbosity=1, inf.params=NULL) {
 	pgi.tree$type<-"filled"
 	pgi.tree$partial.tree<-NULL
 	if(pgi.tree$inf.params$resume) unlink(pgi.tree$inf.params$resume.temp.file)
-	t.simple.con<-pgi.pseudo.consensus(pgi.tree,con.params=list(con.type="simple",edit.cost.func=pgi.tree$inf.params$edit.cost.func),verbosity=0)
-	pgi.tree$tree.length<-pgi.con.tree.length(t.simple.con$consensus)
+	if(inf.params$use.simplecon.treelength) {
+ 	 t.simple.con<-pgi.pseudo.consensus(pgi.tree,con.params=list(con.type="simple",edit.cost.func=pgi.tree$inf.params$edit.cost.func),verbosity=verbosity)
+	 pgi.tree$tree.length<-pgi.con.tree.length(t.simple.con$consensus)
+	} else {
+	 pgi.tree$tree.length<-min(pgi.tree$filled[[1]][,pgi.tree$seq.len+1])
+	}
 	if(verbosity == 1) close(pb)	
 	if(verbosity > 2) summary(pgi.tree)
 	return(pgi.tree) 

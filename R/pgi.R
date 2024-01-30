@@ -16,7 +16,7 @@ function(pgi.tree, interactive=FALSE, nruns=NULL, verbosity = 0, replicates = 10
 	if(is.null(inf.params)) {
 		if(is.null(pgi.tree$inf.params)) {
 			if(verbosity >= 0) cat("WARNING: No inference parameters provided, using defaults. Or: inference parameters have been specifically specified to the PGi function indvidually\n")
-			pgi.tree$inf.params<-list(replicates=replicates,cycles=cycles,ret.anc.seq=ret.anc.seq,simultaneity=simul,heuristic=heuristic,edit.cost.func=edit.cost.func,resume=FALSE,resume.temp.file="temp.execution.rda")
+			pgi.tree$inf.params<-list(replicates=replicates,cycles=cycles,ret.anc.seq=ret.anc.seq,simultaneity=simul,heuristic=heuristic,edit.cost.func=edit.cost.func,resume=FALSE,use.simplecon.treelength=FALSE,resume.temp.file="temp.execution.rda")
 		}
 	}	else {
 		if(verbosity >= 0) cat("Overriding inf parameters in tree with the provided list\n")
